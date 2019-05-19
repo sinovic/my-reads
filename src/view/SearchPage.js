@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Book } from './HomePage';
 
 class SearchPage extends Component {
@@ -15,11 +16,13 @@ class SearchPage extends Component {
 	}
 }
 
-const CloseSearch = props => {
+const CloseSearch = () => {
 	return (
-		<button type='button' className='close-search' onClick={props.CloseSearch}>
-			Close
-		</button>
+		<Link to='/'>
+			<button type='button' className='close-search'>
+				Close
+			</button>
+		</Link>
 	);
 };
 
