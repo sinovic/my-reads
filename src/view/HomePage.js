@@ -54,7 +54,7 @@ const BookShelf = props => {
 					{props.books
 						.filter(book => key === book.shelf)
 						.map(book => (
-							<Book key={book.id} book={book} bookShelf={props.bookShelf} />
+							<Book key={book.id} book={book} bookShelf={props.bookShelf.key} />
 						))}
 				</ol>
 			</div>
@@ -88,7 +88,7 @@ const Book = props => {
 const BookShelfChanger = props => {
 	return (
 		<div className='book-shelf-changer'>
-			<select value={props.bookShelf.key}>
+			<select value={props.bookShelf}>
 				<option value='move' disabled>
 					Move to...
 				</option>

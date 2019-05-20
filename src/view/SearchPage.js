@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Book } from './HomePage';
+import getAll from '../data';
 
 class SearchPage extends Component {
+	state = {
+		books: getAll,
+	};
+
 	render() {
 		return (
 			<div className='search-books'>
@@ -10,7 +15,7 @@ class SearchPage extends Component {
 					<CloseSearch CloseSearch={this.props.CloseSearch} />
 					<SearchBook />
 				</div>
-				<SearchResults />
+				<SearchResults books={this.state.books} />
 			</div>
 		);
 	}
@@ -34,18 +39,13 @@ const SearchBook = () => {
 	);
 };
 
-const SearchResults = () => {
+const SearchResults = props => {
 	return (
 		<div className='search-books-results'>
 			<ol className='books-grid'>
-				<Book />
-				<Book />
-				<Book />
-				<Book />
-				<Book />
-				<Book />
-				<Book />
-				<Book />
+				{props.books.map(book => (
+					<Book key={book.id} book={book} bookShelf='none' />
+				))}
 			</ol>
 		</div>
 	);
