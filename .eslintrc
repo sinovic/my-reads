@@ -1,0 +1,10 @@
+{
+	"extends": ["wesbos"],
+	"rules": {
+		"no-console": "off",
+		"react/prop-types": "off",
+		"react/destructuring-assignment": "off",
+		"arrow-body-style": "off",
+		"react/no-multi-comp": "off"
+	}
+}
