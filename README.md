@@ -92,6 +92,6 @@ Most of the code in this project has been written to the ES6 JavaScript specific
 
 ___
 
-![mainpage](E:\projects\Tutorial\react\4-myreads\assets\mainpage.png)
+![mainpage](./img/mainpage.png)
 
-![searchpage](E:\projects\Tutorial\react\4-myreads\img\searchpage.png)
+![searchpage](./img/searchpage.png)
