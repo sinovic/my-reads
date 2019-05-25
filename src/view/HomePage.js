@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import getAll from '../data';
 
 class HomePage extends Component {
 	render() {
@@ -9,7 +8,11 @@ class HomePage extends Component {
 				<div className='list-books-title'>
 					<h1>MyReads</h1>
 				</div>
-				<BookList />
+				<BookList
+					bookShelfs={this.props.bookShelfs}
+					books={this.props.books}
+					onMove={this.props.onMove}
+				/>
 				<OpenSearch />
 			</div>
 		);
@@ -17,25 +20,16 @@ class HomePage extends Component {
 }
 
 class BookList extends Component {
-	state = {
-		books: getAll,
-	};
-
-	bookShelfs = [
-		{ key: 'currentlyReading', title: 'Currently Reading' },
-		{ key: 'wantToRead', title: 'Want to Read' },
-		{ key: 'read', title: 'Have Read' },
-	];
-
 	render() {
 		return (
 			<div className='list-books-content'>
 				<div>
-					{this.bookShelfs.map(bookShelf => (
+					{this.props.bookShelfs.map(bookShelf => (
 						<BookShelf
 							key={bookShelf.key}
 							bookShelf={bookShelf}
-							books={this.state.books}
+							books={this.props.books}
+							onMove={this.props.onMove}
 						/>
 					))}
 				</div>
@@ -54,7 +48,12 @@ const BookShelf = props => {
 					{props.books
 						.filter(book => key === book.shelf)
 						.map(book => (
-							<Book key={book.id} book={book} bookShelf={props.bookShelf.key} />
+							<Book
+								key={book.id}
+								book={book}
+								bookShelf={props.bookShelf.key}
+								onMove={props.onMove}
+							/>
 						))}
 				</ol>
 			</div>
@@ -73,33 +72,53 @@ const Book = props => {
 						style={{
 							width: 128,
 							height: 193,
-							backgroundImage: `url("${book.imageLinks.thumbnail}")`,
+							backgroundImage: `url("${book.imageLinks &&
+								book.imageLinks.thumbnail}")`,
 						}}
 					/>
-					<BookShelfChanger bookShelf={bookShelf} />
+					<BookShelfChanger
+						book={book}
+						bookShelf={bookShelf}
+						onMove={props.onMove}
+					/>
 				</div>
+				{console.log(book.authors)}
 				<div className='book-title'>{book.title}</div>
-				<div className='book-authors'>{book.authors.join(', ')}</div>
+				<div className='book-authors'>
+					{book.authors && book.authors.join(', ')}
+				</div>
 			</div>
 		</li>
 	);
 };
 
-const BookShelfChanger = props => {
-	return (
-		<div className='book-shelf-changer'>
-			<select value={props.bookShelf}>
-				<option value='move' disabled>
-					Move to...
-				</option>
-				<option value='currentlyReading'>Currently Reading</option>
-				<option value='wantToRead'>Want to Read</option>
-				<option value='read'>Read</option>
-				<option value='none'>None</option>
-			</select>
-		</div>
-	);
-};
+class BookShelfChanger extends Component {
+	state = {
+		shelf: this.props.bookShelf,
+	};
+
+	handleOnMove = e => {
+		const { value: shelf } = e.target;
+		this.setState({ shelf });
+		return this.props.onMove(this.props.book, shelf);
+	};
+
+	render() {
+		return (
+			<div className='book-shelf-changer'>
+				<select value={this.state.shelf} onChange={this.handleOnMove}>
+					<option value='move' disabled>
+						Move to...
+					</option>
+					<option value='currentlyReading'>Currently Reading</option>
+					<option value='wantToRead'>Want to Read</option>
+					<option value='read'>Read</option>
+					<option value='none'>None</option>
+				</select>
+			</div>
+		);
+	}
+}
 
 const OpenSearch = () => {
 	return (

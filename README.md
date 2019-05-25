@@ -76,3 +76,22 @@ npx install-peerdeps --dev eslint-config-wesbos
 }
 ```
 
+### Technologies used
+
+- React.js
+- react-router
+- react-router-dom
+- throttle-debounce
+- Books API (provided by Udacity)
+
+### Notes
+
+The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](https://github.com/BycorSanchez/my-reads/blob/master/SEARCH_TERMS.md).
+
+Most of the code in this project has been written to the ES6 JavaScript specification for compatibility with modern web browsers and future proofing JavaScript code.
+
+___
+
+![mainpage](E:\projects\Tutorial\react\4-myreads\assets\mainpage.png)
+
+![searchpage](E:\projects\Tutorial\react\4-myreads\img\searchpage.png)
